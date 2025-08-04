@@ -29,13 +29,6 @@ public class BukkitNavigationModule extends AbstractNavigationModule<Player> imp
     findCommand = new FindCommand();
     findLocationCommand = new FindLocationCommand();
     cancelPathCommand = new CancelPathCommand();
-
-    if (pathPlugin instanceof BukkitPathFinder bpf) {
-      // TODO
-      bpf.getCommandRegistry().registerCommand(findCommand);
-      bpf.getCommandRegistry().registerCommand(findLocationCommand);
-      bpf.getCommandRegistry().registerCommand(cancelPathCommand);
-    }
   }
 
   @Override

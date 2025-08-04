@@ -26,7 +26,6 @@ public class PathFinderPlugin extends JavaPlugin {
 
   @Override
   public void onLoad() {
-    pathFinder.onLoad();
 
     DumpWriter dumpWriter = DumpWriterProvider.get();
     dumpWriter.addProperty("mc-version", () -> getServer().getVersion());

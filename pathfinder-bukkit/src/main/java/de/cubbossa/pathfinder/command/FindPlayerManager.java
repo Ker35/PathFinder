@@ -33,64 +33,8 @@ public class FindPlayerManager implements Disposable {
 
   public FindPlayerManager(PathFinder pathFinder, CommandRegistry commandRegistry) {
 
-    pathFinder.getDisposer().register(commandRegistry, this);
     requests = new HashMap<>();
 
-    commandRegistry.registerCommand(new CommandTree("findplayer")
-        .withAliases("navigatetoplayer")
-        .withPermission(PathPerms.PERM_CMD_FIND_PLAYER_REQUEST)
-        .then(Arguments.player("target")
-            .executesPlayer((sender, args) -> {
-              makeRequest(sender, args.<Player>getUnchecked(0).getUniqueId());
-            })
-        )
-    );
-    commandRegistry.registerCommand(new CommandTree("findplayeraccept")
-        .withAliases("fpaccept")
-        .withPermission(PathPerms.PERM_CMD_FIND_PLAYER_ACCEPT)
-        .executesPlayer((sender, args) -> {
-          requests.getOrDefault(sender.getUniqueId(), new HashMap<>()).keySet().stream()
-              .findAny()
-              .ifPresentOrElse(
-                  uuid -> acceptRequest(sender, uuid),
-                  () -> BukkitUtils.wrap(sender).sendMessage(Messages.CMD_FINDP_NO_REQ)
-              );
-        })
-        .then(Arguments.player("target")
-            .replaceSuggestions((info, builder) -> {
-              requests.getOrDefault(((Player) info.sender()).getUniqueId(), new HashMap<>()).keySet().stream()
-                  .map(Bukkit::getPlayer).filter(Objects::nonNull).filter(Player::isOnline)
-                  .map(Player::getName).forEach(builder::suggest);
-              return builder.buildFuture();
-            })
-            .executesPlayer((sender, args) -> {
-              acceptRequest(sender, args.<Player>getUnchecked(0).getUniqueId());
-            })
-        )
-    );
-    commandRegistry.registerCommand(new CommandTree("findplayerdecline")
-        .withAliases("fpdecline")
-        .withPermission(PathPerms.PERM_CMD_FIND_PLAYER_DECLINE)
-        .executesPlayer((sender, args) -> {
-          requests.getOrDefault(sender.getUniqueId(), new HashMap<>()).keySet().stream()
-              .findAny()
-              .ifPresentOrElse(
-                  uuid -> declineRequest(sender, uuid),
-                  () -> BukkitUtils.wrap(sender).sendMessage(Messages.CMD_FINDP_NO_REQ)
-              );
-        })
-        .then(Arguments.player("target")
-            .replaceSuggestions((info, builder) -> {
-              requests.getOrDefault(((Player) info.sender()).getUniqueId(), new HashMap<>()).keySet().stream()
-                  .map(Bukkit::getPlayer).filter(Objects::nonNull).filter(Player::isOnline)
-                  .map(Player::getName).forEach(builder::suggest);
-              return builder.buildFuture();
-            })
-            .executesPlayer((sender, args) -> {
-              declineRequest(sender, args.<Player>getUnchecked(0).getUniqueId());
-            })
-        )
-    );
   }
 
   private void makeRequest(Player requester, UUID target) {

@@ -32,12 +32,10 @@ public class BukkitDiscoveryModule extends AbstractDiscoveryModule<Player> imple
   public void onEnable(PathFinder pathPlugin) {
     super.onEnable(pathPlugin);
     Bukkit.getPluginManager().registerEvents(this, PathFinderPlugin.getInstance());
-    BukkitPathFinder.getInstance().getCommandRegistry().registerCommand(discoveriesCommand);
   }
 
   @Override
   public void dispose() {
-    BukkitPathFinder.getInstance().getCommandRegistry().unregisterCommand(discoveriesCommand);
     PlayerMoveEvent.getHandlerList().unregister(this);
     super.dispose();
   }

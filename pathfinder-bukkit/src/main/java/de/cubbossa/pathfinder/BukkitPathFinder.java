@@ -89,7 +89,7 @@ public class BukkitPathFinder extends AbstractPathFinder {
 
   @Override
   public void onLoad() {
-    commandRegistry = new CommandRegistry(this);
+    commandRegistry = new CommandRegistry();
     commandRegistry.loadCommands();
     super.onLoad();
     bstatsLoader = new BStatsLoader(this);
@@ -102,8 +102,6 @@ public class BukkitPathFinder extends AbstractPathFinder {
   public void onEnable() {
     super.onEnable();
     bstatsLoader.registerStatistics(javaPlugin);
-
-    commandRegistry.enableCommands(this);
 
     Bukkit.getPluginManager().registerEvents(new PlayerListener(), javaPlugin);
 

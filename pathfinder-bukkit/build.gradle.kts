@@ -45,7 +45,7 @@ dependencies {
     testImplementation("com.mojang:brigadier:1.0.18")
 
     // Commands
-    api("dev.jorel:commandapi-bukkit-shade:9.5.3")
+    implementation("dev.jorel:commandapi-bukkit:10.1.2")
 
     // Statistics
     implementation("org.bstats:bstats-bukkit:3.0.1")
@@ -213,7 +213,7 @@ tasks {
             include(dependency("net.kyori:.*"))
             include(dependency("org.bstats:.*"))
             include(dependency("xyz.xenondevs:particle:.*"))
-            include(dependency("dev.jorel:commandapi-bukkit-shade:.*"))
+            include(dependency("dev.jorel:commandapi-bukkit:.*"))
             include(dependency("de.exlll:configlib-yaml:.*"))
             include(dependency("de.exlll:configlib-core:.*"))
             include(dependency("org.flywaydb:flyway-core:.*"))
@@ -227,12 +227,10 @@ tasks {
         relocate("org.bstats", "bstats")
         relocate("net.kyori", "kyori")
         relocate("xyz.xenondevs.particle", "particle")
-        relocate("dev.jorel.commandapi", "commandapi")
         relocate("de.cubbossa.translations", "translations")
         relocate("de.cubbossa.splinelib", "splinelib")
         relocate("de.cubbossa.disposables", "disposables")
         relocate("xyz.xenondevs.particle", "particle")
-        relocate("dev.jorel.commandapi", "commandapi")
         relocate("de.exlll", "exlll")
         relocate("org.flywaydb", "flywaydb")
         relocate("org.pf4j", "pf4j")
