@@ -47,6 +47,8 @@ dependencies {
 
     // Client ArmorStands
     implementation("de.cubbossa:ClientEntities:1.3.6")
+    implementation(project(":pathfinder-core"))
+    implementation(project(":pathfinder-api"))
 }
 
 tasks {

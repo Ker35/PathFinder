@@ -23,6 +23,8 @@ dependencies {
     implementation("org.spigotmc:spigot-api:$minecraftVersion-R0.1-SNAPSHOT")
     // Citizens
     implementation("net.citizensnpcs:citizens-main:2.0.33-SNAPSHOT")
+    implementation(project(":pathfinder-core"))
+    implementation(project(":pathfinder-api"))
 }
 
 tasks {

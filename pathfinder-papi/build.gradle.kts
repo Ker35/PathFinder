@@ -41,6 +41,9 @@ dependencies {
 
     // PAPI
     compileOnly("me.clip:placeholderapi:2.11.6")
+
+    implementation(project(":pathfinder-core"))
+    implementation(project(":pathfinder-api"))
 }
 
 tasks {

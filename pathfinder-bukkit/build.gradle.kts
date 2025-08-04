@@ -32,8 +32,8 @@ repositories {
 
 dependencies {
 
-    api(project(":pathfinder-api"))
-    api(project(":pathfinder-core"))
+    implementation(project(":pathfinder-api"))
+    implementation(project(":pathfinder-core"))
     api("de.cubbossa:disposables-bukkit:1.3")
     runtimeOnly(project(path = ":pathfinder-editmode", configuration = "shadow"))
     runtimeOnly(project(":pathfinder-scripted-visualizer"))
@@ -57,9 +57,6 @@ dependencies {
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.2")
     testImplementation("io.papermc.paper:paper-api:1.19.3-R0.1-SNAPSHOT")
     testImplementation("io.papermc.paper:paper-api:1.19.3-R0.1-SNAPSHOT")
-
-    // Utility
-    implementation(files("generated/plugin-yml/Bukkit/plugin.yml"))
 }
 
 sourceSets {
@@ -188,10 +185,13 @@ tasks {
     }
     shadowJar {
 
-        archiveFileName.set("PathFinder-${parent?.version}.jar")
+        archiveFileName.set("PathFinder-${project.version}.jar")
         mergeServiceFiles()
         mergeServiceFiles {
             setPath("META-INF/extensions.idx")
+        }
+        from("build/generated/plugin-yml/plugin.yml") {
+            into("")
         }
 
         // "whitelist" approach, only include transitive dependencies that are truly necessary.

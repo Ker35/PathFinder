@@ -21,6 +21,8 @@ dependencies {
     implementation("org.junit.jupiter:junit-jupiter-params:5.9.2")
     implementation("org.xerial:sqlite-jdbc:3.41.2.2")
     implementation("com.h2database:h2:2.1.214")
+    implementation(project(":pathfinder-core"))
+    implementation(project(":pathfinder-api"))
 }
 
 tasks.test {

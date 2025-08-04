@@ -41,6 +41,9 @@ dependencies {
     // JavaScript
     implementation("org.openjdk.nashorn:nashorn-core:15.4")
     implementation("org.snakeyaml:snakeyaml-engine:2.0")
+
+    implementation(project(":pathfinder-core"))
+    implementation(project(":pathfinder-api"))
 }
 
 tasks {
