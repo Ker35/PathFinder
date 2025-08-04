@@ -185,6 +185,10 @@ tasks {
     }
     shadowJar {
 
+        doFirst {
+            println("Building shadowJar with version: ${project.version}")
+        }
+
         archiveFileName.set("PathFinder-${project.version}.jar")
         mergeServiceFiles()
         mergeServiceFiles {

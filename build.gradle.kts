@@ -10,10 +10,9 @@ java {
     }
 }
 
-group = "de.cubbossa"
-version = "Ker35.com-5.4.3"
-
 subprojects {
+    group = "de.cubbossa"
+    version = "Ker35.com-5.4.3"
 
     apply {
         plugin("java")
