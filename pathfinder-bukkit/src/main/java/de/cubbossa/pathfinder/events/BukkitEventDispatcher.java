@@ -48,6 +48,7 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 import java.util.function.Consumer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -97,25 +98,32 @@ public class BukkitEventDispatcher implements EventDispatcher<Player> {
     logger.log(Level.INFO, message);
   }
 
-  private boolean dispatchEvent(Event event) {
-    try {
-      CompletableFuture<Boolean> future = dispatchEventWithFuture(event);
-      return future.get(500, TimeUnit.MILLISECONDS);
-    } catch (Exception e) {
-      throw new RuntimeException("Calling event " + event.getEventName() + " took more than 500 milli seconds - skipping.", e);
-    }
-  }
-
   private CompletableFuture<Boolean> dispatchEventWithFuture(Event event) {
     if (Bukkit.isPrimaryThread()) {
-      return CompletableFuture.completedFuture(dispatchEventInMainThread(event));
+
+        boolean result = dispatchEventInMainThread(event);
+        return CompletableFuture.completedFuture(result);
     }
+
     return CompletableFuture.supplyAsync(() -> dispatchEventInMainThread(event), BukkitPathFinder.mainThreadExecutor());
   }
 
   private boolean dispatchEventInMainThread(Event event) {
     Bukkit.getPluginManager().callEvent(event);
+
     return !(event instanceof Cancellable cancellable && cancellable.isCancelled());
+  }
+
+  private boolean dispatchEvent(Event event) {
+    try {
+        return dispatchEventWithFuture(event).get(1000, TimeUnit.MILLISECONDS);
+    } catch (TimeoutException e) {
+        logger.warning("Timeout dispatching event " + event.getEventName() + " — assuming cancelled.");
+        return false; 
+    } catch (Exception e) {
+        logger.log(Level.SEVERE, "Error dispatching event " + event.getEventName(), e);
+        return false;
+    }
   }
 
   @Override
