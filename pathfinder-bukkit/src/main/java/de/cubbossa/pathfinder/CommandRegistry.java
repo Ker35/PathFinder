@@ -11,4 +11,5 @@ public class CommandRegistry {
             .usePluginNamespace()
             .missingExecutorImplementationMessage("Wrong command usage, use /help."));
     }
+    
 }
